@@ -23,9 +23,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Convert board to format expected by Go solver and validate characters
+    // Type definitions for Sudoku cells and board
+    type SudokuCell = string | number | null | undefined;
+    type SudokuBoard = SudokuCell[][];
+
     const goArgs: string[] = [];
     for (const row of board) {
-        const rowStr = row.map(cell => (cell === '' || cell === null || cell === undefined) ? '.' : String(cell)).join('');
+        const rowStr = row.map((cell: SudokuCell) => (cell === '' || cell === null || cell === undefined) ? '.' : String(cell)).join('');
         if (!/^[1-9.]{9}$/.test(rowStr)) {
             // Return 400 for invalid input characters
             return NextResponse.json(

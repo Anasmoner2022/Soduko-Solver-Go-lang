@@ -7,16 +7,17 @@ WORKDIR /app
 # Install necessary dependencies for running the Go binary (libc6-compat is for Alpine)
 RUN apk add --no-cache libc6-compat
 
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@10.0.0-rc.2 --activate
+
+# Enable pnpm's store for better Docker caching
+RUN pnpm config set store-dir /app/.pnpm-store
+
 # Copy package.json and lock file
-# Assuming npm is used based on previous commands, copy package.json and package-lock.json (if available)
-# If pnpm or yarn were used, adjust accordingly (e.g., copy pnpm-lock.yaml)
-COPY package.json ./
-# COPY package-lock.json ./
-# COPY pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml ./
 
 # Install app dependencies
-# Use --frozen-lockfile if lock file exists and you want exact dependencies
-RUN npm install
+RUN pnpm install --no-frozen-lockfile
 
 # Copy the pre-compiled Go binary for Linux
 # Ensure it was built with GOOS=linux GOARCH=amd64
@@ -28,11 +29,11 @@ RUN chmod +x ./solver
 COPY . .
 
 # Build the Next.js application
-RUN npm run build
+RUN pnpm build
 
 # Expose the port the app runs on
 EXPOSE 3000
 
 # Define the command to run the app
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
 
