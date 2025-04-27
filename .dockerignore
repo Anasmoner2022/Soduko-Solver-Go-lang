@@ -1,0 +1,9 @@
+.git
+.next
+node_modules
+Dockerfile
+.dockerignore
+README.md
+sudoku_source_code*.zip
+source_code*
+
