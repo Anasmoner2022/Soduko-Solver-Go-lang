@@ -54,7 +54,7 @@ export default function RootLayout({
           '--card': '0 0% 100%',
           '--card-foreground': '240 10% 3.9%',
           '--radius': '0.5rem',
-        }}
+        } as React.CSSProperties}
       >
         <main className="relative flex min-h-screen flex-col">
           {children}
