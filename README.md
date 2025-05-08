@@ -6,7 +6,7 @@ This project aims to create a web application that serves as a verification tool
 
 The application consists of a frontend user interface built with Next.js and a backend component that utilizes the user-provided Go Sudoku solver.
 
-## 2. Go Sudoku Solver (`main.go`)
+## 2. Go Sudoku Solver (`solver.go`)
 
 The core logic for solving Sudoku puzzles resides in the `solver.go` program provided by the student. Key aspects of this solver include:
 
